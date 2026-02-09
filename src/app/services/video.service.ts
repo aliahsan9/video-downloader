@@ -12,9 +12,7 @@ export interface VideoInfo {
   providedIn: 'root'
 })
 export class VideoService {
-  // private apiUrl = 'https://localhost:7180/api/video'; // your .NET API URL
-    private apiUrl = 'https://video-downloader-bmfmbrbxf5dgezf3.centralindia-01.azurewebsites.net/api/info'; // your .NET API URL
-
+  private apiUrl = 'https://video-downloader-bmfmbrbxf5dgezf3.centralindia-01.azurewebsites.net/api/video';
 
   constructor(private http: HttpClient) { }
 
@@ -29,7 +27,6 @@ export class VideoService {
       .set('quality', quality);
 
     const downloadUrl = `${this.apiUrl}/download?${params.toString()}`;
-    // Open in new tab to download
     window.open(downloadUrl, '_blank');
   }
 }
