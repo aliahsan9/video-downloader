@@ -1,0 +1,95 @@
+/* Dark blue gradient background */
+.video-downloader-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* dark blue gradient */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Card styling */
+.downloader-card {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px;
+  background: #1e2a38; /* dark card background */
+  border: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.downloader-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+/* Title Styling */
+.title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+}
+
+/* Input styling */
+.form-control {
+  box-shadow: none;
+  border: 2px solid #ced4da;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #38ef7d;
+  box-shadow: 0 0 5px rgba(56, 239, 125, 0.5);
+}
+
+/* Button styling */
+.btn-primary {
+  background: linear-gradient(135deg, #36d1dc, #5b86e5);
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #11998e, #38ef7d);
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-success:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Rounded download button */
+.download-btn {
+  border-radius: 50px;
+}
+
+/* Thumbnail styling */
+.thumbnail {
+  max-width: 100%;
+  border-radius: 15px;
+  border: 2px solid #38ef7d;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.thumbnail:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .downloader-card {
+    padding: 20px;
+  }
+}
