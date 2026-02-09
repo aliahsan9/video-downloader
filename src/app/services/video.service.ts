@@ -12,7 +12,7 @@ export interface VideoInfo {
   providedIn: 'root'
 })
 export class VideoService {
-  private apiUrl = 'https://video-downloader-bmfmbrbxf5dgezf3.centralindia-01.azurewebsites.net'; // your .NET API URL
+  private apiUrl = 'http://video-downloader-bmfmbrbxf5dgezf3.centralindia-01.azurewebsites.net/api/video'; // your .NET API URL
 
   constructor(private http: HttpClient) { }
 
