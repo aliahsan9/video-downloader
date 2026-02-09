@@ -1,18 +1,61 @@
+<!-- Sticky Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top custom-navbar">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <span class="logo-circle me-2">▶</span>
+      <span class="fw-bold">VidGrab</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navLinks">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navLinks">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">How it Works</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Section -->
 <div class="video-downloader-wrapper">
   <div class="container py-5">
-    <h1 class="text-center mb-5 title">YouTube Video Downloader</h1>
+    <h1 class="text-center mb-5 title">Download YouTube Videos Easily</h1>
 
-    <div class="card p-4 shadow-lg rounded-4 downloader-card">
+    <div class="card downloader-card shadow-lg">
       <!-- Video URL Input -->
       <div class="mb-4">
-        <label for="videoUrl" class="form-label fw-bold text-white">YouTube Video URL</label>
-        <input type="text" id="videoUrl" class="form-control form-control-lg rounded-pill" 
-               [(ngModel)]="videoUrl" placeholder="Paste YouTube URL here">
+        <label for="videoUrl" class="form-label fw-bold text-white">
+          YouTube Video URL
+        </label>
+        <input
+          type="text"
+          id="videoUrl"
+          class="form-control form-control-lg rounded-pill"
+          [(ngModel)]="videoUrl"
+          placeholder="Paste YouTube URL here"
+        />
       </div>
 
       <!-- Fetch Info Button -->
       <div class="mb-4 text-center">
-        <button class="btn btn-primary btn-lg px-5" (click)="fetchVideoInfo()" [disabled]="loadingInfo">
+        <button
+          class="btn btn-primary btn-lg px-5"
+          (click)="fetchVideoInfo()"
+          [disabled]="loadingInfo"
+        >
           {{ loadingInfo ? 'Fetching...' : 'Get Video Info' }}
         </button>
       </div>
@@ -22,25 +65,36 @@
         {{ errorMessage }}
       </div>
 
-      <!-- Video Info and Download -->
+      <!-- Video Info -->
       <div *ngIf="videoInfo" class="video-info mt-4 text-white text-center">
-        <!-- Thumbnail Preview -->
+        <!-- Thumbnail -->
         <div class="mb-3">
-          <img [src]="'https://img.youtube.com/vi/' + getVideoId(videoInfo.url) + '/hqdefault.jpg'" 
-               alt="Thumbnail" class="img-fluid rounded shadow-sm thumbnail">
+          <img
+            [src]="'https://img.youtube.com/vi/' + getVideoId(videoInfo.url) + '/hqdefault.jpg'"
+            alt="Thumbnail"
+            class="img-fluid thumbnail"
+          />
         </div>
 
-        <h5 class="fw-semibold mb-3">Title: {{ videoInfo.title }}</h5>
+        <h5 class="fw-semibold mb-3">{{ videoInfo.title }}</h5>
 
         <div class="mb-3">
-          <label for="qualitySelect" class="form-label fw-bold">Select Quality</label>
-          <select id="qualitySelect" class="form-select form-select-lg rounded-pill" [(ngModel)]="selectedQuality">
-            <option *ngFor="let q of videoInfo.qualities" [value]="q">{{ q }}</option>
+          <label class="form-label fw-bold">Select Quality</label>
+          <select
+            class="form-select form-select-lg rounded-pill"
+            [(ngModel)]="selectedQuality"
+          >
+            <option *ngFor="let q of videoInfo.qualities" [value]="q">
+              {{ q }}
+            </option>
           </select>
         </div>
 
         <div class="text-center mt-4">
-          <button class="btn btn-success btn-lg px-5 download-btn" (click)="downloadVideo()">
+          <button
+            class="btn btn-success btn-lg px-5 download-btn"
+            (click)="downloadVideo()"
+          >
             Download Video
           </button>
         </div>
@@ -48,3 +102,10 @@
     </div>
   </div>
 </div>
+
+<!-- Footer -->
+<footer class="footer text-center text-white py-3">
+  <div class="container">
+    © 2026 VidGrab. All rights reserved.
+  </div>
+</footer>
