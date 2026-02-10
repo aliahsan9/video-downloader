@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
-  imports:[CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
@@ -16,9 +16,18 @@ export class HomeComponent {
   loadingInfo: boolean = false;
   errorMessage: string = '';
 
-  constructor(private videoService: VideoService) {}
+  // Supported platforms
+  platforms = [
+    { name: 'YouTube', icon: 'fab fa-youtube', example: 'https://youtube.com/watch?v=...' },
+    { name: 'TikTok', icon: 'fab fa-tiktok', example: 'https://www.tiktok.com/@user/video/...' },
+    { name: 'Instagram', icon: 'fab fa-instagram', example: 'https://www.instagram.com/p/...' },
+    { name: 'Twitter/X', icon: 'fab fa-twitter', example: 'https://twitter.com/user/status/...' },
+    { name: 'Facebook', icon: 'fab fa-facebook', example: 'https://www.facebook.com/.../videos/...' },
+    { name: 'Vimeo', icon: 'fab fa-vimeo', example: 'https://vimeo.com/...' },
+  ];
 
-  
+  constructor(private videoService: VideoService) { }
+
   fetchVideoInfo() {
     if (!this.videoUrl) return;
     this.loadingInfo = true;
@@ -32,24 +41,25 @@ export class HomeComponent {
         this.loadingInfo = false;
       },
       error: (err) => {
-        this.errorMessage = 'Failed to fetch video info.';
+        this.errorMessage = 'Failed to fetch video info. Please check the link.';
         this.loadingInfo = false;
       }
     });
   }
-getVideoId(url: string): string {
-  try {
-    const regExp = /(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-    const match = url.match(regExp);
-    return match ? match[1] : '';
-  } catch {
-    return '';
-  }
-}
 
   downloadVideo() {
     if (this.videoInfo && this.selectedQuality) {
       this.videoService.downloadVideo(this.videoInfo.url, this.selectedQuality);
+    }
+  }
+
+  getVideoId(url: string): string {
+    try {
+      const regExp = /(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+      const match = url.match(regExp);
+      return match ? match[1] : '';
+    } catch {
+      return '';
     }
   }
 }

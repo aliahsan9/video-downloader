@@ -1,111 +1,137 @@
-<!-- Sticky Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark sticky-top custom-navbar">
+<!-- Add in <head> -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark custom-navbar">
   <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="#">
       <span class="logo-circle me-2">▶</span>
       <span class="fw-bold">VidGrab</span>
     </a>
-
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navLinks">
       <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse" id="navLinks">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link active" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">How it Works</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Contact</a>
-        </li>
+        <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+        <li class="nav-item"><a class="nav-link" href="#how-it-works">How it Works</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
       </ul>
     </div>
   </div>
 </nav>
 
-<!-- Main Section -->
-<div class="video-downloader-wrapper">
-  <div class="container py-5">
-    <h1 class="text-center mb-5 title">Download YouTube Videos Easily</h1>
+<!-- Hero Section -->
+<section class="hero-wrapper d-flex align-items-center text-center">
+  <div class="container">
+    <h1 class="title mb-3">Download Videos Easily</h1>
+    <p class="lead mb-4">Grab videos from YouTube, Facebook, Instagram, TikTok, and more in one click!</p>
 
-    <div class="card downloader-card shadow-lg">
-      <!-- Video URL Input -->
-      <div class="mb-4">
-        <label for="videoUrl" class="form-label fw-bold text-white">
-          YouTube Video URL
-        </label>
-        <input
-          type="text"
-          id="videoUrl"
-          class="form-control form-control-lg rounded-pill"
-          [(ngModel)]="videoUrl"
-          placeholder="Paste YouTube URL here"
-        />
+    <!-- Platforms -->
+    <div class="platform-icons mb-5">
+      <span *ngFor="let p of platforms" title="{{p.name}}">
+        <i [class]="'fa-brands fa-' + p.icon + ' fa-2x'"></i>
+      </span>
+    </div>
+
+    <!-- Downloader Card -->
+    <div class="downloader-card mx-auto p-4 p-md-5 rounded">
+      <input type="text" id="videoUrl" class="form-control mb-3 rounded-pill" 
+             [(ngModel)]="videoUrl" placeholder="Paste video link from any platform">
+      <button class="btn btn-primary btn-lg w-100 mb-3" 
+              (click)="fetchVideoInfo()" [disabled]="loadingInfo">
+        {{ loadingInfo ? 'Fetching...' : 'Get Video Info' }}
+      </button>
+
+      <div *ngIf="errorMessage" class="alert alert-danger rounded-pill">{{ errorMessage }}</div>
+
+      <div *ngIf="videoInfo" class="video-info mt-4">
+        <img *ngIf="videoInfo.url.includes('youtube')" 
+             [src]="'https://img.youtube.com/vi/' + getVideoId(videoInfo.url) + '/hqdefault.jpg'" 
+             alt="Thumbnail" class="img-fluid thumbnail mb-3">
+        <h5 class="fw-semibold mb-2">{{ videoInfo.title }}</h5>
+        <select class="form-select mb-3 rounded-pill" [(ngModel)]="selectedQuality">
+          <option *ngFor="let q of videoInfo.qualities" [value]="q">{{ q }}</option>
+        </select>
+        <button class="btn btn-success btn-lg w-100 download-btn" (click)="downloadVideo()">Download Video</button>
       </div>
+    </div>
+  </div>
+</section>
 
-      <!-- Fetch Info Button -->
-      <div class="mb-4 text-center">
-        <button
-          class="btn btn-primary btn-lg px-5"
-          (click)="fetchVideoInfo()"
-          [disabled]="loadingInfo"
-        >
-          {{ loadingInfo ? 'Fetching...' : 'Get Video Info' }}
-        </button>
-      </div>
-
-      <!-- Error Message -->
-      <div *ngIf="errorMessage" class="alert alert-danger text-center rounded-pill">
-        {{ errorMessage }}
-      </div>
-
-      <!-- Video Info -->
-      <div *ngIf="videoInfo" class="video-info mt-4 text-white text-center">
-        <!-- Thumbnail -->
-        <div class="mb-3">
-          <img
-            [src]="'https://img.youtube.com/vi/' + getVideoId(videoInfo.url) + '/hqdefault.jpg'"
-            alt="Thumbnail"
-            class="img-fluid thumbnail"
-          />
+<!-- Features Section -->
+<section id="features" class="py-5 text-center">
+  <div class="container">
+    <h2 class="mb-5">Features</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="feature-card p-4 rounded">
+          <i class="fa-solid fa-cloud-arrow-down fa-3x mb-3 text-success"></i>
+          <h5>Fast Downloads</h5>
+          <p>Get videos downloaded in seconds without losing quality.</p>
         </div>
-
-        <h5 class="fw-semibold mb-3">{{ videoInfo.title }}</h5>
-
-        <div class="mb-3">
-          <label class="form-label fw-bold">Select Quality</label>
-          <select
-            class="form-select form-select-lg rounded-pill"
-            [(ngModel)]="selectedQuality"
-          >
-            <option *ngFor="let q of videoInfo.qualities" [value]="q">
-              {{ q }}
-            </option>
-          </select>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card p-4 rounded">
+          <i class="fa-solid fa-globe fa-3x mb-3 text-primary"></i>
+          <h5>Supports All Platforms</h5>
+          <p>YouTube, TikTok, Instagram, Facebook, and more are supported.</p>
         </div>
-
-        <div class="text-center mt-4">
-          <button
-            class="btn btn-success btn-lg px-5 download-btn"
-            (click)="downloadVideo()"
-          >
-            Download Video
-          </button>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card p-4 rounded">
+          <i class="fa-solid fa-lock fa-3x mb-3 text-warning"></i>
+          <h5>Safe & Secure</h5>
+          <p>Your downloads are private and safe, with no tracking.</p>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- Footer -->
-<footer class="footer text-center text-white py-3">
+<!-- How It Works Section -->
+<section id="how-it-works" class="py-5 text-center">
   <div class="container">
-    © 2026 VidGrab. All rights reserved.
+    <h2 class="mb-5">How It Works</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="work-step p-4 rounded">
+          <div class="step-icon mb-3"><i class="fa-solid fa-link fa-2x"></i></div>
+          <h5 class="mb-2">Step 1: Paste Link</h5>
+          <p>Copy the video URL and paste it in the box above.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="work-step p-4 rounded">
+          <div class="step-icon mb-3"><i class="fa-solid fa-file-video fa-2x"></i></div>
+          <h5 class="mb-2">Step 2: Fetch Info</h5>
+          <p>Click "Get Video Info" to view title, thumbnail & quality.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="work-step p-4 rounded">
+          <div class="step-icon mb-3"><i class="fa-solid fa-download fa-2x"></i></div>
+          <h5 class="mb-2">Step 3: Download</h5>
+          <p>Select quality & hit "Download Video" to save instantly.</p>
+        </div>
+      </div>
+    </div>
   </div>
-</footer>
+</section>
+
+<!-- Contact / Social -->
+<section id="contact" class="py-5 text-center">
+  <div class="container">
+    <h3 class="mb-4">Connect with us</h3>
+    <div class="d-flex justify-content-center gap-4 mb-3">
+      <a href="#"><i class="fab fa-facebook fa-2x"></i></a>
+      <a href="#"><i class="fab fa-twitter fa-2x"></i></a>
+      <a href="#"><i class="fab fa-instagram fa-2x"></i></a>
+      <a href="#"><i class="fab fa-youtube fa-2x"></i></a>
+    </div>
+    <p class="text">&copy; 2026 VidGrab. All rights reserved.</p>
+  </div>
+</section>
