@@ -12,7 +12,7 @@ export interface VideoInfo {
   providedIn: 'root'
 })
 export class VideoService {
-  private apiUrl = 'https://video-downloader-bmfmbrbxf5dgezf3.centralindia-01.azurewebsites.net/api/video';
+  private apiUrl = 'https://videodownloaderapi20260210184335-gycnf3bsfpbwedft.canadacentral-01.azurewebsites.net/api/video';
 
   constructor(private http: HttpClient) { }
 
