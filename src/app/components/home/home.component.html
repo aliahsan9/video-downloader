@@ -52,7 +52,7 @@
         <img *ngIf="videoInfo.url.includes('youtube')" 
              [src]="'https://img.youtube.com/vi/' + getVideoId(videoInfo.url) + '/hqdefault.jpg'" 
              alt="Thumbnail" class="img-fluid thumbnail mb-3">
-        <h5 class="fw-semibold mb-2">{{ videoInfo.title }}</h5>
+        <h5 class="fw-semibold mb-2 text-primary">{{ videoInfo.title }}</h5>
         <select class="form-select mb-3 rounded-pill" [(ngModel)]="selectedQuality">
           <option *ngFor="let q of videoInfo.qualities" [value]="q">{{ q }}</option>
         </select>
